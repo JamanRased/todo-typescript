@@ -1,4 +1,9 @@
 import React, { useCallback, useReducer, useRef } from 'react';
+import Button from '@mui/material/Button';
+import { Container, Grid, IconButton, TextField, Typography } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Box } from '@mui/system';
+
 
 const Todos = () => {
     interface Todo{
@@ -33,20 +38,48 @@ const Todos = () => {
                 newTodo.current.value = " ";
             }
            },[])
-
     return (
-        <div>
-            <input type="text" ref={newTodo} />
-            <button onClick={addTodo}> Add a new Item </button>
-            
-            {
-                todos.map((todo) =>(
-                    <div key={todo.id}>{todo.text}
-                    <button onClick={()=> dispatch({type:"REMOVE", id: todo.id})}> Remove Item </button>
-                    </div>
-                ))
-            }
-        </div>
+        <Container fixed>
+        <Box sx={{bgcolor: '#cfe8fc', height: 'auto', paddingTop:'20px' }}>
+                <Typography variant="h3" component="div" sx={{ flexGrow: 1 }}>
+                    Note Your Daily Task
+                </Typography>
+            <Grid container spacing={4}>
+                <Grid item xs={6}>
+                    <Box sx={{bgcolor: '#ffdbf4',   margin:'10px', padding:'20px' }}>
+                        <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
+                            Add Task
+                        </Typography>
+
+                        <input type="text" ref={newTodo}/>
+                        <Button variant="outlined" onClick={addTodo} sx={{ margin:'10px' }}> Add a new Item</Button>
+                    </Box>    
+                </Grid>
+                <Grid item xs={6}> 
+                    <Box sx={{bgcolor: '#f9f6ac',padding:'20px', margin:'10px' }}>
+                        <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
+                            Show Task
+                        </Typography>
+                        {
+                            todos.map((todo) =>(
+                                <div key={todo.id}>
+                               
+                                <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
+                                    {todo.text}
+                                </Typography>
+                                <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
+                                    <Button variant="outlined" onClick={()=> dispatch({type:"REMOVE", id: todo.id})}> Remove Item</Button>
+                                </Typography>
+                                
+                                </div>
+                            ))
+                        }
+                    </Box>    
+                </Grid>
+                
+            </Grid>
+        </Box>
+        </Container>
     );
 };
 
